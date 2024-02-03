@@ -1,0 +1,35 @@
+name: Caching with yarn
+on: push
+jobs:
+  install-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - name: chechout source
+        uses: actions/checkout@v4
+
+      - name: setup node & cache
+        uses: actions/setup-node@v4
+        with:
+          node-version: '14'
+          cache: 'yarn'
+          
+      - name: install dependencies    
+        run: yarn install --frozen-lockfile # optional, --immutable
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: chechout source
+        uses: actions/checkout@v4
+
+      - name: setup node & cache
+        uses: actions/setup-node@v4
+        with:
+          node-version: '14'
+          cache: 'yarn'
+          
+      - name: install dependencies    
+        run: yarn install --frozen-lockfile # optional, --immutable
+
+      - name: Build
+        run: yarn run build
